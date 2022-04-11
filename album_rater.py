@@ -10,6 +10,9 @@
 
 # Functions
 
+# Menu that allows the user to access each function when needed
+# Will create this when each function is working
+
 # Function that manages the album dictionary
 def album_dictionary():
     """ Dictionary of chosen albums (not user entered).
@@ -29,14 +32,20 @@ def print_dictionary_basic(dictionary):
         Prints the keys and values (Album and its differnet values).
     """
     for ID, album in dictionary.items():
-        print("Album {}, Album: {}: \nArtist: {} \nGenre: {} \nRating: {}\n".format(ID, album["Title"], album["Artist"],
-                                                                                                                        album["Genre"], album["Rating"]))
-
-
-# Prints album dictionary (advanced)
+        print("Album: {} \nArtist: {} \nGenre: {} \nRating: {}\n".format(album["Title"], album["Artist"],
+                                                                                                                album["Genre"], album["Rating"]))
 
 
 # Adds album to dictionary
+def add_album():
+    # Add album title
+    title = input("What is the title of the album? ")
+    # Add album Artist
+    artist = input("What is the artist of the album? ")
+    # Add album Genre
+    genre = input("What is the genre of the album? ")
+
+    return title, artist, genre
 
 
 # Edit album in dictionary
@@ -56,6 +65,12 @@ def print_dictionary_basic(dictionary):
 if __name__ == "__main__":
     # Accesses the album dictionary
     album_dict = album_dictionary()
+
+
+    # Adds an album using add album function
+    # Appends the string input to dictionary
+    title, artist, genre = add_album()
+    album_dict[count] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
 
     # Uses basic dictionary print to print the albums
     print_dictionary_basic(album_dict)
