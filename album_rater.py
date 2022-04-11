@@ -11,7 +11,29 @@
 # Functions
 
 # Menu that allows the user to access each function when needed
-# Will create this when each function is working
+def menu():
+    while True:
+        try:
+            mode = int(input("""\nChoose a mode:
+            1: Enter a new album
+            2: Edit albums
+            3: Delete an album
+            4: Rate an album
+            5: Get an album reccomendation
+            0: View albums
+            """))
+
+        except ValueError:
+            print("Not a valid number, enter another.")
+
+        #Try and except else and finally.
+        else:
+            if mode in [0, 1, 2, 3, 4, 5]:
+                return mode
+                break
+            
+            else:
+                print("Not valid number, enter another.")
 
 # Function that manages the album dictionary
 def album_dictionary():
@@ -66,11 +88,33 @@ if __name__ == "__main__":
     # Accesses the album dictionary
     album_dict = album_dictionary()
 
+    # Sets the prgram running top True
+    running =  True
+    while running:
 
-    # Adds an album using add album function
-    # Appends the string input to dictionary
-    title, artist, genre = add_album()
-    album_dict[count] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
+        # Gets a chosen mode
+        chosen_mode = menu()
 
-    # Uses basic dictionary print to print the albums
-    print_dictionary_basic(album_dict)
+        if chosen_mode == 1:
+            # Adds an album using add album function
+            # Appends the string input to dictionary
+            title, artist, genre = add_album()
+            album_dict[4] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
+
+        elif chosen_mode == 2:
+            skip
+
+        elif chosen_mode == 3:
+            skip
+
+        elif chosen_mode == 4:
+            skip
+
+        elif chosen_mode == 5:
+            skip
+
+        else:
+            # Uses basic dictionary print to print the albums
+            print_dictionary_basic(album_dict)
+
+
