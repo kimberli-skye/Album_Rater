@@ -70,6 +70,22 @@ def add_album():
     return title, artist, genre
 
 
+# Allows user to choose an album
+# Prints the number needed to choose an album
+# Checks if the ID number is valid
+# Returns the integer if it is
+def choose_album(album_dict):
+    for ID, album in album_dict.items():
+        print("Enter {} to choose the album {}".format(ID, album["Title"]))
+
+    chosen_ID = int(input(""))
+
+    for ID in album_dict:
+        if chosen_ID == ID:
+            return chosen_ID
+        
+
+
 # Edit album in dictionary
 
 
@@ -102,7 +118,7 @@ if __name__ == "__main__":
             album_dict[4] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
 
         elif chosen_mode == 2:
-            skip
+            print(choose_album(album_dict))
 
         elif chosen_mode == 3:
             skip
