@@ -40,7 +40,7 @@ def album_dictionary():
     """ Dictionary of chosen albums (not user entered).
          Returns the dictionary (with a mix of integers and strings).
     """
-    albums = {}
+    albums = {1:{"Title":"Be More Chill", "Artist":"Original Cast of Be More Chill", "Genre":"Musical", "Rating":"No Rating"}}
     return albums
 
 
@@ -60,6 +60,8 @@ def choose_album(album_dict):
     for ID, album in album_dict.items():
         print("Enter {} to choose the album {}".format(ID, album["Title"]))
 
+
+    # Comment on construct and for loop, as above
     chosen_id = int(input(""))
     for ID in album_dict:
         if chosen_id == ID:
@@ -84,7 +86,7 @@ def edit_album(album_dictionary, chosen_album):
 
     print("Editing album:", album_dictionary[chosen_album])
     title, artist, genre = add_album()
-    album_dict[chosen_album] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
+    album_dict[chosen_album] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":"No Rating"}
 
 
 def delete_album(album_dictionary, chosen_album):
@@ -94,44 +96,69 @@ def delete_album(album_dictionary, chosen_album):
     del album_dictionary[chosen_album]
 
 
-    
 # Rate album
+def rate_albums(album_dictionary, chosen_album):
+    # Uses choose album function to choose an album to rate
+    for ID, album in album_dictionary.items():
+        album_name = album["Title"]
+
+    # Asks user to rate album from 1-5
+    rating = int(input("Rate the album '{}' from 1 - 5: ".format(album_name)))
+    
+    # Checks if rating is expected
+    if rating > 5 or rating < 1:
+        print("Your rating must be from 1 - 5, try again")
+
+    else:
+        # Returns rating
+        return rating
+
+
+
+
 # Reccomends albums with the same genre
 # Main routine
 if __name__ == "__main__":
-    # Accesses the album dictionary
-    album_dict = album_dictionary()
+    album_dict = album_dictionary()     # Accesses the album dictionary
 
     # Defines constants
     count = 0
 
-    # Sets the prgram running top True
+    # Creates while loop
     running =  True
     while running:
 
-        # Gets a chosen mode
-        chosen_mode = menu()
+        chosen_mode = menu()     # Gets a chosen mode
 
+        # Adds an album using add album function
+        # Appends the string input to dictionary
         if chosen_mode == 1:
-            # Adds an album using add album function
-            # Appends the string input to dictionary
             title, artist, genre = add_album()
-            album_dict[count] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":""}
+            album_dict[count] = {"Title":title, "Artist":artist, "Genre":genre, "Rating":"No rating"}
             count = count + 1
 
+        # Gets a chosen album
+        # Goes to edit album function
         elif chosen_mode == 2:
-            # Calls chosen album
             chosen_album = choose_album(album_dict)
             edit_album(album_dict, chosen_album)
 
+        # Gets a chosen album
+        # Calls delete_album function
         elif chosen_mode == 3:
-            # Calls chosen_album function
-            # Calls delete_album function
             chosen_album = choose_album(album_dict)
             delete_album(album_dict, chosen_album)
 
+        # Gets a chosen album
+        # Calls rate_albums function
+        # Adds rating to dictionary
         elif chosen_mode == 4:
-            skip
+            chosen_album = choose_album(album_dict)
+            album_rating = rate_albums(album_dict, chosen_album)
+
+            for ID, album in album_dict.items():
+                album["Rating"] = album_rating
+            
 
         elif chosen_mode == 5:
             skip
