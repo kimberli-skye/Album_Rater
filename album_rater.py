@@ -13,6 +13,9 @@ def menu():
          Checks input is valid.
          Returns mode.
     """
+
+    # Loops through while loop until a mode is chosen
+    # Uses try and except to overwrite value errors
     while True:
         try:
             mode = int(input("""\nChoose a mode:
@@ -27,7 +30,8 @@ def menu():
         except ValueError:
             print("Not a valid number, enter another.")
 
-        #Try and except else and finally.
+        # Try and except else and finally.
+        # Checks mode is valid, returns mode
         else:
             if mode in [0, 1, 2, 3, 4, 5]:
                 return mode
@@ -40,7 +44,9 @@ def album_dictionary():
     """ Dictionary of chosen albums (not user entered).
          Returns the dictionary (with a mix of integers and strings).
     """
-    albums = {1:{"Title":"Be More Chill", "Artist":"Original Cast of Be More Chill", "Genre":"Musical", "Rating":"No Rating"}}
+    albums = {1:{"Title":"Be More Chill", "Artist":"Original Cast of Be More Chill", "Genre":"Musical", "Rating":"No Rating"},
+                      2:{"Title":"Happy", "Artist":"Original Cast of Be More Chill", "Genre":"Pop", "Rating":"No Rating"},
+                      3:{"Title":"Mastermind", "Artist":"Original Cast of Be More Chill", "Genre":"R&B", "Rating":"No Rating"}}
     return albums
 
 
@@ -61,7 +67,7 @@ def choose_album(album_dict):
         print("Enter {} to choose the album {}".format(ID, album["Title"]))
 
 
-    # Comment on construct and for loop, as above
+    # For loop to check the chosen ID is an actual one
     chosen_id = int(input(""))
     for ID in album_dict:
         if chosen_id == ID:
@@ -72,9 +78,9 @@ def add_album():
     """ Gets user input for each value.
          Returns the different strings and count.
     """
-    title = input("What is the title of the album?: ")
-    artist = input("What is the artist of the album? ")
-    genre = input("What is the genre of the album? ")
+    title = input("What is the title of the album?: ").title()
+    artist = input("What is the artist of the album? ").title()
+    genre = input("What is the genre of the album? ").title()
 
     return title, artist, genre
 
@@ -114,9 +120,35 @@ def rate_albums(album_dictionary, chosen_album):
         return rating
 
 
+# Dictionary of albums with susequent genres
+def album_reccomendations():
+    album_recs = {"Pop":"Glory Days - Little Mix",
+                              "Musical":"The Trail to Oregon! - Team StarKid",
+                              "Rock":"Nevermind - Nirvana",
+                              "Jazz":"TROLLS soundtrack - Dreamworks Trolls",
+                              "EDM":"Bangarang - Skrillex",
+                              "Dubstep":"Untrue - Burial",
+                              "R&B":"Back of My Mind - H.E.R.",
+                              "Country":"Come On Over - Shania Twain",
+                              "Indie Rock":"Scaled and Icy - Twenty One Pilot"}
+
+    return album_recs
 
 
 # Reccomends albums with the same genre
+def reccomend_albums(album_dict, album_recs):
+    print("Album reccomendations:")
+
+    # Loops through two dictionarys to checks if genres match
+    for ID, album in album_dict.items():
+        for genre, rec_album in album_recs.items():
+            if genre == album["Genre"]:
+                print("  - Since you liked", album["Title"], "listen to", rec_album, "\n")
+            else:
+               matching_genre = False
+
+
+
 # Main routine
 if __name__ == "__main__":
     album_dict = album_dictionary()     # Accesses the album dictionary
@@ -157,11 +189,15 @@ if __name__ == "__main__":
             album_rating = rate_albums(album_dict, chosen_album)
 
             for ID, album in album_dict.items():
-                album["Rating"] = album_rating
+                if ID == chosen_album:
+                    album["Rating"] = album_rating
+                else:
+                    rated_album = False
             
 
         elif chosen_mode == 5:
-            skip
+            album_recs = album_reccomendations()
+            reccomend_albums(album_dict, album_recs)
 
         else:
             # Uses basic dictionary print to print the albums
